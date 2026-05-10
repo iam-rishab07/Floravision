@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-dark: #0d130d;
+    --brand-accent: #a3e635;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Prevents the scrollbar from shifting layout on windows */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    @apply bg-[#0d130d] text-white antialiased;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Custom selection color to match the theme */
+  ::selection {
+    background-color: #a3e635;
+    color: #0d130d;
+  }
+}
+
+@layer components {
+  /* Custom utility for the glowing green effect seen on icons and dots */
+  .glow-green {
+    box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);
+  }
+
+  /* Custom scrollbar for a more integrated look */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0d130d;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1a221a;
+    border-radius: 10px;
+    border: 2px solid #0d130d;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a3e635;
+  }
+}
+
+/* Animations for the "floating" plants in the Hero and Cards */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glassmorphism utility */
+.glass-card {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+}

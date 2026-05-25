@@ -39,7 +39,7 @@ const ContactPage = () => {
         <div className="space-y-8">
           
           <div className="bg-white p-8 rounded-3xl border border-editorial shadow-soft space-y-6">
-            <h3 className="text-2xl font-bold text-[#1B362F]">FloraVision Greenhouse</h3>
+            <h3 className="text-2xl font-bold text-[#1B362F]">Botanica Greenhouse</h3>
             <p className="text-gray-500 text-xs leading-relaxed">
               Drop by and experience the botanicals in person. Our staff of experienced gardeners is ready to guide you.
             </p>
@@ -65,7 +65,7 @@ const ContactPage = () => {
                 <div className="p-3 bg-[#EAECE6] text-[#1B362F] rounded-xl">
                   <Mail size={16} />
                 </div>
-                <span>care@floravision.in</span>
+                <span>care@botanica.in</span>
               </div>
 
               <div className="flex items-center gap-4 text-[#2D3230]">
@@ -87,7 +87,7 @@ const ContactPage = () => {
               <div className="w-12 h-12 bg-[#1B362F] text-white rounded-full flex items-center justify-center mx-auto shadow-md animate-bounce">
                 <MapPin size={20} />
               </div>
-              <p className="text-xs font-bold text-[#1B362F] uppercase tracking-wider">FloraVision HQ</p>
+              <p className="text-xs font-bold text-[#1B362F] uppercase tracking-wider">Botanica HQ</p>
               <p className="text-[10px] text-gray-500 font-semibold">Mumbai, Maharashtra, IN</p>
             </div>
           </div>

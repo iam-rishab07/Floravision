@@ -1,6 +1,6 @@
-# 🌿 FloraVision - Luxury Botanical E-Commerce Boutique
+# 🌿 Botanica - Luxury Botanical E-Commerce Boutique
 
-FloraVision is a premium, high-end plant e-commerce application built with **React.js** and **Tailwind CSS**. Rebuilt from a simple landing page, it now features a sophisticated, warm editorial design inspired by luxury botanical boutiques. It integrates dynamic client-side routing, full cart checkout systems, custom review boards, and hardware-accelerated 3D parallax interactions.
+Botanica is a premium, high-end plant e-commerce application built with **React.js** and **Tailwind CSS**. Rebuilt from a simple landing page, it now features a sophisticated, warm editorial design inspired by luxury botanical boutiques. It integrates dynamic client-side routing, full cart checkout systems, custom review boards, and hardware-accelerated 3D parallax interactions.
 
 ---
 
@@ -36,8 +36,8 @@ Follow these steps to set up and run the project locally:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/iam-rishab07/FloraVision.git
-cd FloraVision
+git clone https://github.com/iam-rishab07/Botanica.git
+cd Botanica
 ```
 
 ### 2. Install dependencies

@@ -11,7 +11,7 @@ const Footer = ({ onNavigate }) => {
             <div className="w-8 h-8 bg-[#1B362F] rounded-lg flex items-center justify-center">
               <div className="w-4 h-4 bg-[#C2A684] rounded-sm transform rotate-45"></div>
             </div>
-            <span className="text-2xl font-bold tracking-tight text-[#1B362F]">FloraVision.</span>
+            <span className="text-2xl font-bold tracking-tight text-[#1B362F]">Botanica.</span>
           </div>
 
           <p className="text-gray-500 text-sm leading-relaxed max-w-xs font-medium">
@@ -71,7 +71,7 @@ const Footer = ({ onNavigate }) => {
       {/* Copyright Bar */}
       <div className="max-w-7xl mx-auto mt-8 flex justify-end">
         <p className="text-xs text-gray-400 font-semibold">
-          FloraVision © All Rights Reserved
+          Botanica © All Rights Reserved
         </p>
       </div>
     </footer>

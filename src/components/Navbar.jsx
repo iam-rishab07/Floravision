@@ -17,7 +17,7 @@ const Navbar = ({ activePage, onNavigate, cartCount }) => {
           </div>
         </div>
         <span className="text-xl font-bold tracking-tight text-[#1B362F]">
-          FloraVision<span className="text-[#C2A684]">.</span>
+          Botanica<span className="text-[#C2A684]">.</span>
         </span>
       </div>
 

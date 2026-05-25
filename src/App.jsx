@@ -242,7 +242,7 @@ const App = () => {
               <span className="text-xs uppercase tracking-widest text-[#C2A684] font-semibold">Client Stories</span>
               <h1 className="text-4xl md:text-6xl font-bold text-[#1B362F]">Customer Testimonials</h1>
               <p className="text-gray-500 max-w-lg mx-auto text-sm leading-relaxed">
-                Read experiences from plant parents who welcomed FloraVision greenery into their spaces.
+                Read experiences from plant parents who welcomed Botanica greenery into their spaces.
               </p>
             </div>
 

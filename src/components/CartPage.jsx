@@ -44,7 +44,7 @@ const CartPage = ({ cart, onUpdateQty, onRemoveItem, onClearCart, onBackToShop }
         <div className="space-y-3">
           <h2 className="text-3xl font-bold text-[#1B362F]">Order Confirmed!</h2>
           <p className="text-gray-500 text-sm leading-relaxed">
-            Thank you for shopping with FloraVision. Your plants are being carefully prepared for shipping. An email receipt has been sent to <span className="font-bold text-[#1B362F]">{formData.email}</span>.
+            Thank you for shopping with Botanica. Your plants are being carefully prepared for shipping. An email receipt has been sent to <span className="font-bold text-[#1B362F]">{formData.email}</span>.
           </p>
         </div>
         <div className="bg-white p-6 rounded-2xl border border-editorial shadow-soft text-left text-xs space-y-3">

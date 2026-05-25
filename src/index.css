@@ -2,69 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 @layer base {
   :root {
-    --brand-dark: #0d130d;
-    --brand-accent: #a3e635;
+    --bg-primary: #F9F8F6;       /* Linen warm off-white */
+    --bg-secondary: #F2F0EB;     /* Soft warm gray/sage */
+    --color-primary: #1B362F;    /* Deep Forest Green */
+    --color-accent: #C2A684;     /* Warm Gold/Sand */
+    --color-text: #2D3230;       /* Charcoal/dark gray */
+    --color-card: #FFFFFF;       /* Pure White for card bg */
   }
 
   html {
     scroll-behavior: smooth;
-    /* Prevents the scrollbar from shifting layout on windows */
     scrollbar-gutter: stable;
   }
 
   body {
-    @apply bg-[#0d130d] text-white antialiased;
+    background-color: var(--bg-primary);
+    color: var(--color-text);
     font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--color-primary);
+    font-weight: 700;
   }
 
   /* Custom selection color to match the theme */
   ::selection {
-    background-color: #a3e635;
-    color: #0d130d;
+    background-color: var(--color-accent);
+    color: var(--color-primary);
   }
 }
 
 @layer components {
-  /* Custom utility for the glowing green effect seen on icons and dots */
-  .glow-green {
-    box-shadow: 0 0 20px rgba(163, 230, 53, 0.4);
+  /* Editorial Shadow */
+  .shadow-soft {
+    box-shadow: 0 10px 30px rgba(27, 54, 47, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
   }
 
-  /* Custom scrollbar for a more integrated look */
+  .shadow-hover {
+    box-shadow: 0 20px 40px rgba(27, 54, 47, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+
+  /* Premium border styling */
+  .border-editorial {
+    border-color: rgba(27, 54, 47, 0.08);
+  }
+
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #0d130d;
+    background: var(--bg-primary);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #1a221a;
+    background: #E2DFD8;
     border-radius: 10px;
-    border: 2px solid #0d130d;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #a3e635;
+    background: var(--color-accent);
   }
 }
 
-/* Animations for the "floating" plants in the Hero and Cards */
-@keyframes float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(2deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
-}
+@layer utilities {
+  /* Optimized Floating Animation */
+  .animate-float {
+    animation: float-soft 6s ease-in-out infinite;
+  }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
+  @keyframes float-soft {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
 
-/* Glassmorphism utility */
-.glass-card {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  /* Subtle Reveal Animation for Sections */
+  .reveal-on-load {
+    animation: reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }

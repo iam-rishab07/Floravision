@@ -1,54 +1,71 @@
 import React from 'react';
 import { Search, ShoppingBag, Menu } from 'lucide-react';
+import { navLinks } from '../data';
 
-const Navbar = () => {
+const Navbar = ({ activePage, onNavigate, cartCount }) => {
   return (
-    <nav className="sticky top-0 z-50 bg-[#0d130d]/80 backdrop-blur-md px-6 md:px-12 py-5 flex items-center justify-between border-b border-white/5">
+    <nav className="sticky top-0 z-50 bg-[#F9F8F6]/90 backdrop-blur-md px-6 md:px-12 py-5 flex items-center justify-between border-b border-editorial">
       
       {/* Logo Section */}
-      <div className="flex items-center gap-2 group cursor-pointer">
+      <div 
+        onClick={() => onNavigate('home')}
+        className="flex items-center gap-2 group cursor-pointer"
+      >
         <div className="relative">
-          {/* The green leaf/box icon with glow */}
-          <div className="w-8 h-8 bg-[#a3e635] rounded-lg shadow-[0_0_15px_rgba(163,230,53,0.5)] flex items-center justify-center transition-transform group-hover:rotate-12">
-            <div className="w-4 h-4 bg-[#0d130d] rounded-sm transform rotate-45"></div>
+          <div className="w-8 h-8 bg-[#1B362F] rounded-lg shadow-sm flex items-center justify-center transition-transform group-hover:rotate-12 duration-300">
+            <div className="w-4 h-4 bg-[#C2A684] rounded-sm transform rotate-45"></div>
           </div>
         </div>
-        <span className="text-xl font-bold tracking-tight text-white">
-          FloraVision<span className="text-[#a3e635]">.</span>
+        <span className="text-xl font-bold tracking-tight text-[#1B362F]">
+          FloraVision<span className="text-[#C2A684]">.</span>
         </span>
       </div>
 
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center gap-10">
-        {['Home', 'Plants Type', 'More', 'Contact'].map((item) => (
-          <a
-            key={item}
-            href={`#${item.toLowerCase().replace(' ', '-')}`}
-            className="text-sm font-medium text-gray-300 hover:text-white transition-colors relative group"
+        {navLinks.map((link) => (
+          <button
+            key={link.name}
+            onClick={() => onNavigate(link.href)}
+            className={`text-xs uppercase tracking-widest font-bold transition-all relative group ${
+              activePage === link.href ? 'text-[#1B362F]' : 'text-gray-400 hover:text-[#1B362F]'
+            }`}
           >
-            {item}
-            {item === 'Plants Type' && (
-              <span className="ml-1 text-[10px] opacity-50 text-white">▼</span>
-            )}
-            {/* Hover Underline Effect */}
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#a3e635] transition-all group-hover:w-full"></span>
-          </a>
+            {link.name}
+            {/* Animated Underline */}
+            <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#C2A684] transition-all duration-300 ${
+              activePage === link.href ? 'w-full' : 'w-0 group-hover:w-full'
+            }`}></span>
+          </button>
         ))}
       </div>
 
       {/* Action Icons */}
-      <div className="flex items-center gap-5 text-white">
-        <button className="p-2 hover:bg-white/5 rounded-full transition-colors" aria-label="Search">
-          <Search size={20} strokeWidth={2.5} />
+      <div className="flex items-center gap-5 text-[#1B362F]">
+        <button 
+          onClick={() => onNavigate('shop')}
+          className="p-2 hover:bg-[#F2F0EB] rounded-xl transition-all duration-300 group" 
+          aria-label="Search"
+        >
+          <Search size={20} className="group-hover:scale-110 transition-all text-[#1B362F]" />
         </button>
         
-        <button className="p-2 hover:bg-white/5 rounded-full transition-colors relative" aria-label="Cart">
-          <ShoppingBag size={20} strokeWidth={2.5} />
-          {/* Notification dot */}
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#a3e635] rounded-full border-2 border-[#0d130d]"></span>
+        <button 
+          onClick={() => onNavigate('cart')}
+          className="p-2 hover:bg-[#F2F0EB] rounded-xl transition-all duration-300 relative group" 
+          aria-label="Cart"
+        >
+          <ShoppingBag size={20} className="group-hover:scale-110 transition-all text-[#1B362F]" />
+          {/* Cart Quantity Badge */}
+          {cartCount > 0 && (
+            <span className="absolute top-1 right-1 w-4 h-4 bg-[#C2A684] text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-[#F9F8F6] shadow-sm animate-bounce">
+              {cartCount}
+            </span>
+          )}
         </button>
 
-        <button className="p-2 md:hidden hover:bg-white/5 rounded-full transition-colors" aria-label="Menu">
+        {/* Mobile Menu Trigger */}
+        <button className="p-2 md:hidden hover:bg-[#F2F0EB] rounded-xl transition-colors" aria-label="Menu">
           <Menu size={24} />
         </button>
       </div>

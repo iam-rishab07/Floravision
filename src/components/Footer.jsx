@@ -1,53 +1,72 @@
 import React from 'react';
 
-const Footer = () => {
+const Footer = ({ onNavigate }) => {
   return (
-    <footer className="bg-[#0d130d] text-white pt-20 pb-10 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-white/5 pb-12">
+    <footer className="bg-[#F2F0EB] text-[#1B362F] pt-20 pb-10 px-6 md:px-12 border-t border-editorial">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-editorial pb-12">
         
         {/* Column 1: Brand & Socials */}
         <div className="space-y-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#a3e635] rounded-lg shadow-[0_0_15px_rgba(163,230,53,0.4)] flex items-center justify-center">
-              {/* Simple Plant Leaf Icon Placeholder */}
-              <div className="w-4 h-4 bg-[#0d130d] rounded-full"></div>
+            <div className="w-8 h-8 bg-[#1B362F] rounded-lg flex items-center justify-center">
+              <div className="w-4 h-4 bg-[#C2A684] rounded-sm transform rotate-45"></div>
             </div>
-            <span className="text-2xl font-bold tracking-tight">FloraVision.</span>
+            <span className="text-2xl font-bold tracking-tight text-[#1B362F]">FloraVision.</span>
           </div>
           
-          <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+          <p className="text-gray-500 text-sm leading-relaxed max-w-xs font-medium">
             "From lush indoor greens to vibrant outdoor blooms, our plants are crafted 
             to thrive and elevate your living environment."
           </p>
 
-          <div className="flex gap-6 text-xs font-bold tracking-widest text-gray-300">
-            <a href="#" className="hover:text-[#a3e635] transition-colors">FB</a>
-            <a href="#" className="hover:text-[#a3e635] transition-colors">TW</a>
-            <a href="#" className="hover:text-[#a3e635] transition-colors">LI</a>
+          <div className="flex gap-6 text-xs font-bold tracking-widest text-[#1B362F]/70">
+            <a href="#" className="hover:text-[#C2A684] transition-colors">FB</a>
+            <a href="#" className="hover:text-[#C2A684] transition-colors">TW</a>
+            <a href="#" className="hover:text-[#C2A684] transition-colors">LI</a>
           </div>
         </div>
 
         {/* Column 2: Quick Links */}
         <div className="md:pl-12">
-          <h4 className="text-lg font-semibold mb-6">Quick Link's</h4>
-          <ul className="space-y-4 text-sm text-gray-400">
-            <li><a href="#" className="hover:text-white transition-colors underline underline-offset-4 decoration-white/20">Home</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Type's Of plant's</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
+          <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
+          <ul className="space-y-4 text-sm font-semibold text-gray-500">
+            <li>
+              <button 
+                onClick={() => onNavigate('home')} 
+                className="hover:text-[#1B362F] transition-colors"
+              >
+                Home
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => onNavigate('shop')} 
+                className="hover:text-[#1B362F] transition-colors"
+              >
+                Shop Collection
+              </button>
+            </li>
+            <li>
+              <button 
+                onClick={() => onNavigate('contact')} 
+                className="hover:text-[#1B362F] transition-colors"
+              >
+                Contact Greenhouse
+              </button>
+            </li>
           </ul>
         </div>
 
         {/* Column 3: Newsletter */}
         <div className="space-y-6">
-          <h4 className="text-lg font-semibold">For Every Update.</h4>
+          <h4 className="text-lg font-semibold">For Every Update</h4>
           <div className="relative flex items-center">
             <input 
               type="email" 
               placeholder="Enter Email" 
-              className="w-full bg-transparent border border-white/20 rounded-lg py-3 px-4 text-sm focus:outline-none focus:border-[#a3e635] transition-all"
+              className="w-full bg-white border border-editorial rounded-lg py-3 px-4 text-sm focus:outline-none focus:border-[#C2A684] transition-all text-[#2D3230]"
             />
-            <button className="absolute right-1 px-4 py-2 bg-white text-black font-bold text-xs rounded-md hover:bg-[#a3e635] transition-colors uppercase">
+            <button className="absolute right-1 px-4 py-2 bg-[#1B362F] hover:bg-[#1B362F]/90 text-white font-bold text-xs rounded-md transition-colors uppercase">
               Subscribe
             </button>
           </div>
@@ -56,8 +75,8 @@ const Footer = () => {
 
       {/* Copyright Bar */}
       <div className="max-w-7xl mx-auto mt-8 flex justify-end">
-        <p className="text-xs text-gray-500">
-          FloraVision © all right reserve
+        <p className="text-xs text-gray-400 font-semibold">
+          FloraVision © All Rights Reserved
         </p>
       </div>
     </footer>

@@ -5,6 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <meta name="referrer" content="no-referrer" />
+    
     <title>FloraVision | Earth's Exhale</title>
 
     <meta name="description" content="Premium indoor and outdoor plants crafted to thrive." />
@@ -18,16 +20,33 @@
       html {
         scroll-behavior: smooth;
       }
-      /* Ensuring the background color matches your design during initial load */
+      /* Design-matched background to prevent white flash during load */
       body {
         background-color: #0d130d;
         margin: 0;
         font-family: 'Plus Jakarta Sans', sans-serif;
         color: white;
+        overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+      }
+
+      /* Simple scrollbar styling to match Dark Nature theme */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0d130d;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1e2b1e;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a3e635;
       }
     </style>
   </head>
   <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
     <script type="module" src="/src/main.jsx"></script>

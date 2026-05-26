@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Trash2, ArrowRight, CheckCircle } from 'lucide-react';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://botanica-by-rishi.onrender.com/api';
+
 const CartPage = ({ cart, currentUser, onUpdateQty, onRemoveItem, onClearCart, onBackToShop }) => {
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,7 +59,7 @@ const CartPage = ({ cart, currentUser, onUpdateQty, onRemoveItem, onClearCart, o
     };
 
     try {
-      const res = await fetch('http://localhost:8080/api/orders', {
+      const res = await fetch(`${API_BASE_URL}/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://botanica-by-rishi.onrender.com/api';
 
 const AuthPage = ({ onAuthSuccess, onBackToHome }) => {
   const [isLoginTab, setIsLoginTab] = useState(true);

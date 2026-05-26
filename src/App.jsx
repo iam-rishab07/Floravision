@@ -14,6 +14,8 @@ import AdminDashboard from './components/AdminDashboard.jsx';
 import AuthPage from './components/AuthPage.jsx';
 import MyAccount from './components/MyAccount.jsx';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+
 import { navLinks } from './data.js';
 
 const App = () => {
@@ -46,14 +48,14 @@ const App = () => {
 
   // Fetch dynamic records from database endpoints
   const fetchCatalog = () => {
-    fetch('http://localhost:8080/api/plants')
+    fetch(`${API_BASE_URL}/plants`)
       .then(res => res.json())
       .then(data => setAllPlants(data))
       .catch(err => console.error('Error loading catalog:', err));
   };
 
   const fetchApprovedReviews = () => {
-    fetch('http://localhost:8080/api/reviews')
+    fetch(`${API_BASE_URL}/reviews`)
       .then(res => res.json())
       .then(data => setLocalReviews(data))
       .catch(err => console.error('Error loading reviews:', err));
@@ -145,7 +147,7 @@ const App = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:8080/api/reviews', {
+      const res = await fetch(`${API_BASE_URL}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Trash2, ArrowRight, CheckCircle } from 'lucide-react';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://botanica-by-rishi.onrender.com/api';
+import { API_BASE_URL } from '../config.js';
 
 const CartPage = ({ cart, currentUser, onUpdateQty, onRemoveItem, onClearCart, onBackToShop }) => {
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);

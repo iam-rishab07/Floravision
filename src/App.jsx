@@ -13,9 +13,7 @@ import ContactPage from './components/ContactPage.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import AuthPage from './components/AuthPage.jsx';
 import MyAccount from './components/MyAccount.jsx';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
-
+import { API_BASE_URL } from './config.js';
 import { navLinks } from './data.js';
 
 const App = () => {

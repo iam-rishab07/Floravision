@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Check, X, RefreshCw, MessageSquare, ShoppingBag, Leaf, Eye, EyeOff } from 'lucide-react';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://botanica-by-rishi.onrender.com/api';
+import { API_BASE_URL } from '../config.js';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('plants');

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, Phone, MapPin, Hash, ShoppingBag, Calendar, CheckCircle2, ChevronRight, Lock } from 'lucide-react';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://botanica-by-rishi.onrender.com/api';
+import { API_BASE_URL } from '../config.js';
 
 const MyAccount = ({ currentUser, onUpdateSession }) => {
   const [activeTab, setActiveTab] = useState('profile');

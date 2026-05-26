@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://botanica-by-rishi.onrender.com/api';
+import { API_BASE_URL } from '../config.js';
 
 const ContactPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);

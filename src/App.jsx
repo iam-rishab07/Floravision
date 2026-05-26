@@ -10,18 +10,59 @@ import ShopPage from './components/ShopPage.jsx';
 import ProductDetailPage from './components/ProductDetailPage.jsx';
 import CartPage from './components/CartPage.jsx';
 import ContactPage from './components/ContactPage.jsx';
+import AdminDashboard from './components/AdminDashboard.jsx';
+import AuthPage from './components/AuthPage.jsx';
+import MyAccount from './components/MyAccount.jsx';
 
-import { allPlants, topSellingPlants, deskDecorations, reviews } from './data.js';
+import { navLinks } from './data.js';
 
 const App = () => {
   const [page, setPage] = useState('home');
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [cart, setCart] = useState([]);
   
+  // Dynamic Database API states
+  const [allPlants, setAllPlants] = useState([]);
+  const [localReviews, setLocalReviews] = useState([]);
+  
+  // Authentication state initialized from localStorage to persist sessions across page reloads
+  const [currentUser, setCurrentUser] = useState(() => {
+    const saved = localStorage.getItem('currentUser');
+    return saved ? JSON.parse(saved) : null;
+  });
+  
+  // Synchronize user session state changes to localStorage
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem('currentUser');
+    }
+  }, [currentUser]);
+  
   // Testimonial submission state
   const [newReview, setNewReview] = useState({ name: '', comment: '', rating: 5 });
   const [submittedReview, setSubmittedReview] = useState(false);
-  const [localReviews, setLocalReviews] = useState(reviews);
+
+  // Fetch dynamic records from database endpoints
+  const fetchCatalog = () => {
+    fetch('http://localhost:8080/api/plants')
+      .then(res => res.json())
+      .then(data => setAllPlants(data))
+      .catch(err => console.error('Error loading catalog:', err));
+  };
+
+  const fetchApprovedReviews = () => {
+    fetch('http://localhost:8080/api/reviews')
+      .then(res => res.json())
+      .then(data => setLocalReviews(data))
+      .catch(err => console.error('Error loading reviews:', err));
+  };
+
+  useEffect(() => {
+    fetchCatalog();
+    fetchApprovedReviews();
+  }, [page]);
 
   // Scroll to top on page change
   useEffect(() => {
@@ -30,8 +71,28 @@ const App = () => {
 
   // Navigation controller
   const handleNavigate = (targetPage) => {
+    if (targetPage === 'admin') {
+      if (!currentUser || currentUser.role !== 'admin') {
+        alert("Access Denied: Administrative privileges required.");
+        setPage('home');
+        return;
+      }
+    }
+    if (targetPage === 'account') {
+      if (!currentUser) {
+        alert("Access Denied: Please sign in to access your profile.");
+        setPage('auth');
+        return;
+      }
+    }
     setPage(targetPage);
     setSelectedProductId(null);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setCart([]); // Clear cart on logout for security
+    setPage('home');
   };
 
   // View detail controller
@@ -71,25 +132,40 @@ const App = () => {
     setCart([]);
   };
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
     if (!newReview.name || !newReview.comment) return;
-    setLocalReviews(prev => [
-      {
-        name: newReview.name,
-        comment: newReview.comment,
-        rating: parseFloat(newReview.rating),
-        avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50) + 10}`,
-        badge: false
-      },
-      ...prev
-    ]);
-    setSubmittedReview(true);
-    setNewReview({ name: '', comment: '', rating: 5 });
+
+    const payload = {
+      customerName: newReview.name,
+      rating: parseFloat(newReview.rating),
+      comment: newReview.comment,
+      avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 50) + 10}`,
+      badge: false
+    };
+
+    try {
+      const res = await fetch('http://localhost:8080/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('API failed to save review.');
+      const savedReview = await res.json();
+      setLocalReviews(prev => [savedReview, ...prev]);
+      setSubmittedReview(true);
+      setNewReview({ name: '', comment: '', rating: 5 });
+    } catch (err) {
+      console.error(err);
+      alert('Error posting review to backend database.');
+    }
   };
 
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
   const selectedProduct = allPlants.find((p) => p.id === selectedProductId);
+  
+  const topSellingPlants = allPlants.slice(0, 3);
+  const deskDecorations = allPlants.filter(p => p.category === "Desk Decor");
 
   return (
     <div className="bg-[#F9F8F6] min-h-screen selection:bg-[#C2A684] selection:text-[#1B362F] scroll-smooth relative">
@@ -99,6 +175,8 @@ const App = () => {
         activePage={page} 
         onNavigate={handleNavigate} 
         cartCount={cartCount} 
+        currentUser={currentUser}
+        onLogout={handleLogout}
       />
 
       {/* Pages Switch Router */}
@@ -224,6 +302,7 @@ const App = () => {
         {page === 'cart' && (
           <CartPage 
             cart={cart} 
+            currentUser={currentUser}
             onUpdateQty={handleUpdateQty} 
             onRemoveItem={handleRemoveItem} 
             onClearCart={handleClearCart} 
@@ -233,6 +312,31 @@ const App = () => {
 
         {page === 'contact' && (
           <ContactPage />
+        )}
+
+        {page === 'admin' && (
+          <AdminDashboard />
+        )}
+
+        {page === 'auth' && (
+          <AuthPage 
+            onAuthSuccess={(user) => {
+              setCurrentUser(user);
+              if (user.role === 'admin') {
+                setPage('admin');
+              } else {
+                setPage('home');
+              }
+            }}
+            onBackToHome={() => setPage('home')}
+          />
+        )}
+
+        {page === 'account' && (
+          <MyAccount 
+            currentUser={currentUser} 
+            onUpdateSession={(updatedUser) => setCurrentUser(updatedUser)} 
+          />
         )}
 
         {page === 'reviews' && (
@@ -320,7 +424,7 @@ const App = () => {
       </main>
 
       {/* Persistant Footer */}
-      <Footer onNavigate={handleNavigate} />
+      <Footer onNavigate={handleNavigate} currentUser={currentUser} />
 
     </div>
   );

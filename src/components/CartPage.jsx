@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Trash2, ArrowRight, CheckCircle } from 'lucide-react';
 
-const CartPage = ({ cart, onUpdateQty, onRemoveItem, onClearCart, onBackToShop }) => {
+const CartPage = ({ cart, currentUser, onUpdateQty, onRemoveItem, onClearCart, onBackToShop }) => {
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    address: '',
-    zip: '',
+    name: currentUser?.name || '',
+    email: currentUser?.email || '',
+    address: currentUser?.address || '',
+    zip: currentUser?.zipCode || '',
     cardNumber: '',
     expiry: '',
     cvv: ''
   });
+
+  // Synchronize form fields if the user logs in while viewing the checkout screen
+  useEffect(() => {
+    if (currentUser) {
+      setFormData(prev => ({
+        ...prev,
+        name: currentUser.name || prev.name,
+        email: currentUser.email || prev.email,
+        address: currentUser.address || prev.address,
+        zip: currentUser.zipCode || prev.zip
+      }));
+    }
+  }, [currentUser]);
 
   const subtotal = cart.reduce((acc, item) => acc + parseInt(item.price) * item.qty, 0);
   const shipping = subtotal > 500 || subtotal === 0 ? 0 : 50;
@@ -23,16 +36,44 @@ const CartPage = ({ cart, onUpdateQty, onRemoveItem, onClearCart, onBackToShop }
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
     // Verify inputs
     if (!formData.name || !formData.email || !formData.address) {
       alert("Please fill in the required name, email, and shipping address.");
       return;
     }
-    // Set success and clear cart
-    setIsCheckoutSuccess(true);
-    onClearCart();
+
+    const payload = {
+      user: currentUser ? { id: currentUser.id } : null,
+      customerName: formData.name,
+      customerEmail: formData.email,
+      shippingAddress: formData.address,
+      zipCode: formData.zip || '400001',
+      orderItems: cart.map(item => ({
+        plant: { id: item.id },
+        quantity: item.qty
+      }))
+    };
+
+    try {
+      const res = await fetch('http://localhost:8080/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      const resData = await res.json();
+      if (!res.ok) {
+        throw new Error(resData.error || 'API order submission failed.');
+      }
+      
+      setIsCheckoutSuccess(true);
+      onClearCart();
+    } catch (err) {
+      console.error(err);
+      alert(err.message || 'Failed to process order with backend database.');
+    }
   };
 
   if (isCheckoutSuccess) {

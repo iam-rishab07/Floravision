@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer = ({ onNavigate }) => {
+const Footer = ({ onNavigate, currentUser }) => {
   return (
     <footer className="bg-[#F2F0EB] text-[#1B362F] pt-20 pb-10 px-6 md:px-12 border-t border-editorial">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-editorial pb-12">
@@ -49,6 +49,16 @@ const Footer = ({ onNavigate }) => {
                 Contact Greenhouse
               </button>
             </li>
+            {currentUser && currentUser.role === 'admin' && (
+              <li>
+                <button
+                  onClick={() => onNavigate('admin')}
+                  className="hover:text-[#1B362F] transition-colors text-[#C2A684]"
+                >
+                  Admin Panel
+                </button>
+              </li>
+            )}
           </ul>
         </div>
 

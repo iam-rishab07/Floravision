@@ -15,10 +15,27 @@ const ContactPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    setFormSubmitted(true);
+
+    try {
+      const res = await fetch('http://localhost:8080/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        })
+      });
+      if (!res.ok) throw new Error('API submission failed.');
+      setFormSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send inquiry to the database server.');
+    }
   };
 
   return (

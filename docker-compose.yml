@@ -1,0 +1,47 @@
+services:
+  # 1. The Database
+  db:
+    image: mysql:8.0
+    container_name: floravision-db
+    environment:
+      MYSQL_ROOT_PASSWORD: secretpassword
+      MYSQL_DATABASE: floravision
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psecretpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 2. The Backend
+  backend:
+    build: ./backend
+    container_name: floravision-backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Bind to all network interfaces within the container to allow host port mapping
+      - SERVER_ADDRESS=0.0.0.0
+      # Point datasource connection string to database container service 'db'
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/floravision?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      # Inject credentials overriding local configuration
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secretpassword
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # 3. The Frontend
+  frontend:
+    build: .
+    container_name: floravision-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
